@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+export SSLKEYLOGFILE="$PWD/sslkeylogfile.txt"
+
+mitmproxy \
+	--listen-port 1337 \
+	--set console_palette=dark \
+	-s ./addon.mitmproxy.py \
+	$@
+

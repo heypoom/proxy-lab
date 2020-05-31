@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+proxy \
+	--hostname 0.0.0.0 \
+	--port 1337 \
+	--plugins proxy.plugin.CacheResponsesPlugin,./proxy.plugins \
+	--ca-key-file ./certs/ca-key.pem \
+	--ca-cert-file ./certs/ca-cert.pem \
+	--ca-signing-key-file ./certs/ca-signing-key.pem \
+	--log-level DEBUG \
+	--enable-dashboard \
+	--enable-devtools \
+	--enable-events \
+	--enable-static-server \
+	--enable-web-server
+

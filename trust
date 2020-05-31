@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain $1
+
+# sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/login.keychain $1
+

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+export HTTPS_KEY_FILE_PATH=./certs/https-key.pem
+export HTTPS_CERT_FILE_PATH=./certs/https-cert.pem
+
+export CA_KEY_FILE_PATH=./certs/ca-key.pem
+export CA_CERT_FILE_PATH=./certs/ca-cert.pem
+export CA_SIGNING_KEY_FILE_PATH=./certs/ca-signing-key.pem
+
+generate_https() {
+	# Generate server key
+	python -m proxy.common.pki gen_private_key \
+		--private-key-path $HTTPS_KEY_FILE_PATH
+	python -m proxy.common.pki remove_passphrase \
+		--private-key-path $HTTPS_KEY_FILE_PATH
+
+	# Generate server certificate
+	python -m proxy.common.pki gen_public_key \
+		--private-key-path $HTTPS_KEY_FILE_PATH \
+		--public-key-path $HTTPS_CERT_FILE_PATH
+}
+
+generate_ca() {
+	# Generate CA key
+	python -m proxy.common.pki gen_private_key \
+		--private-key-path $CA_KEY_FILE_PATH
+	python -m proxy.common.pki remove_passphrase \
+		--private-key-path $CA_KEY_FILE_PATH
+
+	# Generate CA certificate
+	python -m proxy.common.pki gen_public_key \
+		--private-key-path $CA_KEY_FILE_PATH \
+		--public-key-path $CA_CERT_FILE_PATH
+
+	# Generate key that will be used to generate domain certificates on the fly
+	# Generated certificates are then signed with CA certificate / key generated above
+	python -m proxy.common.pki gen_private_key \
+		--private-key-path $CA_SIGNING_KEY_FILE_PATH
+	python -m proxy.common.pki remove_passphrase \
+		--private-key-path $CA_SIGNING_KEY_FILE_PATH
+}
+
+generate_ca
+

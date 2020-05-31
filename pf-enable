@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+sudo sysctl -w net.inet.ip.forwarding=1
+sudo sysctl -w net.inet6.ip6.forwarding=1
+sudo pfctl -ef pf.conf
+

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+export SSLKEYLOGFILE="$PWD/sslkeylogfile.txt"
+
+mitmproxy \
+	--listen-port 1337 \
+	--rawtcp \
+	--tcp-host ".*" \
+	--set console_palette=dark \
+	-s ./tcp.mitmproxy.py \
+	$@
+
